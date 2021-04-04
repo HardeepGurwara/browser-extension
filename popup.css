@@ -1,0 +1,30 @@
+body{
+    width: 450px;
+    height: 562px;
+}
+
+.greeting{
+    height: 50px;
+    background-color: aliceblue;
+}
+
+.progressContainer{
+    height: 50px;
+    background-color: cadetblue;
+}
+
+.actionInput{
+    height: 50px;
+    background-color: coral;
+}
+
+.actionItems{
+    height: 250px;
+    background-color: cornsilk;
+}
+
+.actionItem__item{
+    height: 40px;
+    background-color: crimson;
+    margin: 5px;
+}
