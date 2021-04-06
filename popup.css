@@ -84,16 +84,50 @@ body{
     box-shadow: none;
 }
 
-
-
-
 .actionItems{
     height: 250px;
-    background-color: cornsilk;
+    background-color: violet;
 }
 
 .actionItem__item{
-    height: 40px;
-    background-color: crimson;
+    background-color: #f6f6f6;    
+    border-radius: 10px;
+    padding: 1rem;
     margin: 5px;
+}
+
+.actionItem__main{
+    display: flex;
+    align-items: center;
+}
+
+.actionItem__text{
+    flex: 1;
+    word-break: break-word;
+    text-align: center;
+    color: #727272;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.actionItem__checkBox{
+    border: 3px solid rgba(151, 151, 151, 0.27);
+    border-radius: 6px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.actionItem__checkBox i{
+    color: #56e452;
+}
+
+.actionItem__delete i{
+    color: rgba(151, 151, 151, 0.27);
+    width: 40px;
+    text-align: center;
+    cursor: pointer;
+    font-size: 20px;
 }
