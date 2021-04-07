@@ -84,10 +84,6 @@ body{
     box-shadow: none;
 }
 
-.actionItems{
-    height: 250px;
-    background-color: violet;
-}
 
 .actionItem__item{
     background-color: #f6f6f6;    
