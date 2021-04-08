@@ -1,14 +1,50 @@
 let addItemForm = document.querySelector("#addItemForm");
-
 addItemForm.addEventListener("submit", (e) => {
   e.preventDefault();
   // grabbing the input value from a form and we pass the input name field itemText, not the variable name
   let itemText = addItemForm.elements.namedItem("itemText").value;
   if (itemText) {
+    add(itemText);
     renderActionItem(itemText);
     addItemForm.elements.namedItem("itemText").value = "";
   }
 });
+
+//adds the itemTask text to the chrome storage.
+const add = (text) => {
+  //Single item text
+  let actionItem = {
+    id: 1,
+    added: new Date().toString(),
+    text: text,
+    completed: null,
+  };
+  console.log(actionItem);
+  chrome.storage.sync.get(["actionItems"], (data) => {
+    let items = data.actionItems;
+    console.log(items);
+
+    // if items does not exist then create one otherwise push it to the exisitng one
+    if (!items) {
+      items = [actionItem];
+      console.log(items);
+    } else {
+      items.push(actionItem);
+    }
+    //save the data in chrome storage
+    chrome.storage.sync.set(
+      {
+        actionItems: items,
+      },
+      // callback function to get the items from the chrome local storage as this process is async, it will not wait if you're not using a callback
+      () => {
+        chrome.storage.sync.get(["actionItems"], (data) => {
+          console.log(data);
+        });
+      }
+    );
+  });
+};
 
 const renderActionItem = (text) => {
   let element = document.createElement("div");
