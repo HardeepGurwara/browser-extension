@@ -1,4 +1,21 @@
 let addItemForm = document.querySelector("#addItemForm");
+let storage = chrome.storage.sync;
+
+// getting the data from the chrome storage
+storage.get(["actionItems"], (data) => {
+  let actionItems = data.actionItems;
+  // passing the data to loop through each item
+  renderActionItems(actionItems);
+});
+
+//Making the data loop to display it
+const renderActionItems = (actionItems) => [
+  actionItems.forEach((item) => {
+    //item is a object so we access the item text and displayed it
+    renderActionItem(item.text);
+  }),
+];
+
 addItemForm.addEventListener("submit", (e) => {
   e.preventDefault();
   // grabbing the input value from a form and we pass the input name field itemText, not the variable name
