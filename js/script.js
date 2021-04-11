@@ -6,13 +6,14 @@ storage.get(["actionItems"], (data) => {
   let actionItems = data.actionItems;
   // passing the data to loop through each item
   renderActionItems(actionItems);
+  console.log(actionItems);
 });
 
 //Making the data loop to display it
 const renderActionItems = (actionItems) => [
   actionItems.forEach((item) => {
     //item is a object so we access the item text and displayed it
-    renderActionItem(item.text);
+    renderActionItem(item.text, item.id, item.completed);
   }),
 ];
 
@@ -31,7 +32,7 @@ addItemForm.addEventListener("submit", (e) => {
 const add = (text) => {
   //Single item text
   let actionItem = {
-    id: 1,
+    id: uuidv4(),
     added: new Date().toString(),
     text: text,
     completed: null,
@@ -63,7 +64,28 @@ const add = (text) => {
   });
 };
 
-const renderActionItem = (text) => {
+const markUnmarkCompleted = (id) => {
+  storage.get(["actionItems"], (data) => {
+    let items = data.actionItems;
+    let foundItemIndex = items.findIndex((item) => item.id == id);
+    if (foundItemIndex >= 0) {
+      items[foundItemIndex].completed = true;
+      storage.set({
+        actionItems: items,
+      });
+    }
+  });
+};
+
+const handleCompletedEventListener = (e) => {
+  const id = e.target.parentElement.parentElement.getAttribute("data-id");
+  console.log(id);
+  const parent = e.target.parentElement.parentElement;
+  parent.classList.add("completed");
+  markUnmarkCompleted(id);
+};
+
+const renderActionItem = (text, id, completed) => {
   let element = document.createElement("div");
   element.classList.add("actionItem__item");
   let mainElement = document.createElement("div");
@@ -79,6 +101,14 @@ const renderActionItem = (text) => {
   <i class="fas fa-check" aria-hidden="true"></i>
 </div>
   `;
+
+  if (completed) {
+    element.classList.add("completed");
+  }
+  //setting the ID
+  element.setAttribute("data-id", id);
+
+  checkEl.addEventListener("click", handleCompletedEventListener);
 
   textEl.textContent = text;
 

@@ -120,6 +120,7 @@ body{
 
 .actionItem__checkBox i{
     color: #56e452;
+    opacity: 0;
 }
 
 .actionItem__delete i{
@@ -137,3 +138,17 @@ body{
 .actionItem__item.completed .actionItem__checkBox{
     border-color: #56e452;
 }
+.actionItem__check:hover i{
+    opacity: 1;
+}
+ /* no events on action items check as well as anything inside there */
+.actionItem__check *{
+    pointer-events: none;
+}
+
+.actionItem__item.completed .actionItem__check i{
+    opacity: 1;
+} 
+
+
+
