@@ -6,7 +6,7 @@ storage.get(["actionItems"], (data) => {
   let actionItems = data.actionItems;
   // passing the data to loop through each item
   renderActionItems(actionItems);
-  console.log(actionItems);
+  setProgress();
 });
 
 //Making the data loop to display it
@@ -70,9 +70,14 @@ const markUnmarkCompleted = (id, completedStatus) => {
     let foundItemIndex = items.findIndex((item) => item.id == id);
     if (foundItemIndex >= 0) {
       items[foundItemIndex].completed = completedStatus;
-      storage.set({
-        actionItems: items,
-      });
+      storage.set(
+        {
+          actionItems: items,
+        },
+        () => {
+          setProgress();
+        }
+      );
     }
   });
 };
@@ -128,6 +133,20 @@ const renderActionItem = (text, id, completed) => {
   document.querySelector(".actionItems").prepend(element);
 };
 
+const setProgress = () => {
+  storage.get(["actionItems"], (data) => {
+    let actionItems = data.actionItems;
+    let completeItems;
+    let totalItems = actionItems.length;
+    completeItems = actionItems.filter((item) => item.completed).length;
+    let progress = 0;
+
+    progress = completeItems / totalItems;
+    console.log(progress);
+    circle.animate(progress);
+  });
+};
+
 var circle = new ProgressBar.Circle("#container", {
   color: "#010101",
   // This has to be the same size as the maximum width to
@@ -157,4 +176,4 @@ var circle = new ProgressBar.Circle("#container", {
 circle.text.style.fontFamily = '"Raleway", Helvetica, sans-serif';
 circle.text.style.fontSize = "2rem";
 
-circle.animate(1.0); // Number from 0.0 to 1.0
+// circle.animate(1.0); // Number from 0.0 to 1.0
