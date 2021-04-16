@@ -54,4 +54,22 @@ class ActionItems {
       circle.animate(progress);
     });
   };
+
+  remove = (id) => {
+    storage.get(["actionItems"], (data) => {
+      let items = data.actionItems;
+      let foundItemIndex = items.findIndex((item) => item.id == id);
+      if (foundItemIndex >= 0) {
+        items.splice(foundItemIndex, 1);
+        storage.set(
+          {
+            actionItems: items,
+          },
+          () => {
+            this.setProgress();
+          }
+        );
+      }
+    });
+  };
 }

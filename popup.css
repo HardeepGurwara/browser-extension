@@ -129,6 +129,7 @@ body{
     text-align: center;
     cursor: pointer;
     font-size: 20px;
+    transition: all 0.2s ease-in-out;
 }
 
 .actionItem__item.completed{
@@ -150,5 +151,10 @@ body{
     opacity: 1;
 } 
 
+.actionItem__delete *{
+    pointer-events: none;
+}
 
-
+.actionItem__delete:hover i{
+    color: #d00000;
+}
