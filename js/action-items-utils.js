@@ -35,14 +35,9 @@ class ActionItems {
       let foundItemIndex = items.findIndex((item) => item.id == id);
       if (foundItemIndex >= 0) {
         items[foundItemIndex].completed = completedStatus;
-        storage.set(
-          {
-            actionItems: items,
-          },
-          () => {
-            this.setProgress();
-          }
-        );
+        storage.set({
+          actionItems: items,
+        });
       }
     });
   };
@@ -60,7 +55,7 @@ class ActionItems {
     });
   };
 
-  remove = (id) => {
+  remove = (id, callback) => {
     storage.get(["actionItems"], (data) => {
       let items = data.actionItems;
       let foundItemIndex = items.findIndex((item) => item.id == id);
@@ -70,9 +65,7 @@ class ActionItems {
           {
             actionItems: items,
           },
-          () => {
-            this.setProgress();
-          }
+          callback
         );
       }
     });

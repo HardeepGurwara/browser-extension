@@ -13,6 +13,9 @@ storage.get(["actionItems"], (data) => {
   createQuickActionListener();
   actionItemsUtils.setProgress();
   console.log(data.actionItems);
+  chrome.storage.onChanged.addListener(() => {
+    actionItemsUtils.setProgress();
+  });
 });
 
 //Making the data loop to display it
@@ -42,8 +45,10 @@ addItemForm.addEventListener("submit", (e) => {
   // grabbing the input value from a form and we pass the input name field itemText, not the variable name
   let itemText = addItemForm.elements.namedItem("itemText").value;
   if (itemText) {
-    actionItemsUtils.add(itemText);
-    renderActionItem(itemText);
+    actionItemsUtils.add(itemText, (actionItem) => {
+      renderActionItem(actionItem.text, actionItem.id, actionItem.completed);
+    });
+
     addItemForm.elements.namedItem("itemText").value = "";
   }
 });
@@ -66,9 +71,9 @@ const handleDeleteEventListener = (e) => {
   console.log(id);
   const parent = e.target.parentElement.parentElement;
   // remove from chrome storage
-  actionItemsUtils.remove(id);
-
-  parent.remove();
+  actionItemsUtils.remove(id, () => {
+    parent.remove();
+  });
 };
 
 const renderActionItem = (text, id, completed) => {
