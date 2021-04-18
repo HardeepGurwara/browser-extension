@@ -10,8 +10,9 @@ storage.get(["actionItems"], (data) => {
   let actionItems = data.actionItems;
   // passing the data to loop through each item
   renderActionItems(actionItems);
-
+  createQuickActionListener();
   actionItemsUtils.setProgress();
+  console.log(data.actionItems);
 });
 
 //Making the data loop to display it
@@ -21,6 +22,20 @@ const renderActionItems = (actionItems) => [
     renderActionItem(item.text, item.id, item.completed);
   }),
 ];
+
+const handleQuickActionListener = (e) => {
+  const text = e.target.getAttribute("data-text");
+  actionItemsUtils.add(text, (actionItem) => {
+    renderActionItem(actionItem.text, actionItem.id, actionItem.completed);
+  });
+};
+
+const createQuickActionListener = () => {
+  let buttons = document.querySelectorAll(".quick-action");
+  buttons.forEach((button) => {
+    button.addEventListener("click", handleQuickActionListener);
+  });
+};
 
 addItemForm.addEventListener("submit", (e) => {
   e.preventDefault();

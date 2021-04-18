@@ -1,6 +1,6 @@
 class ActionItems {
   //adds the itemTask text to the chrome storage.
-  add = (text) => {
+  add = (text, callback) => {
     //Single item text
     let actionItem = {
       id: uuidv4(),
@@ -19,9 +19,14 @@ class ActionItems {
         items.push(actionItem);
       }
       //save the data in chrome storage
-      chrome.storage.sync.set({
-        actionItems: items,
-      });
+      chrome.storage.sync.set(
+        {
+          actionItems: items,
+        },
+        () => {
+          callback(actionItem);
+        }
+      );
     });
   };
   markUnmarkCompleted = (id, completedStatus) => {
