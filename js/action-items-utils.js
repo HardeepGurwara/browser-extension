@@ -7,6 +7,7 @@ class ActionItems {
       added: new Date().toString(),
       text: text,
       completed: null,
+      website: null,
     };
 
     chrome.storage.sync.get(["actionItems"], (data) => {
@@ -23,6 +24,7 @@ class ActionItems {
         {
           actionItems: items,
         },
+        // calling back so the data id wouldn't be undefined
         () => {
           callback(actionItem);
         }
@@ -65,6 +67,7 @@ class ActionItems {
           {
             actionItems: items,
           },
+          // calling back again to remove the id properly
           callback
         );
       }

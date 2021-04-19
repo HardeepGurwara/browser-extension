@@ -13,6 +13,7 @@ storage.get(["actionItems"], (data) => {
   createQuickActionListener();
   actionItemsUtils.setProgress();
   console.log(data.actionItems);
+  //changing setprogress everytime everytime something happens to chrome local storage
   chrome.storage.onChanged.addListener(() => {
     actionItemsUtils.setProgress();
   });
@@ -47,9 +48,8 @@ addItemForm.addEventListener("submit", (e) => {
   if (itemText) {
     actionItemsUtils.add(itemText, (actionItem) => {
       renderActionItem(actionItem.text, actionItem.id, actionItem.completed);
+      addItemForm.elements.namedItem("itemText").value = "";
     });
-
-    addItemForm.elements.namedItem("itemText").value = "";
   }
 });
 
