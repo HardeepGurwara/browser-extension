@@ -9,6 +9,7 @@ const actionItemsUtils = new ActionItems();
 storage.get(["actionItems"], (data) => {
   let actionItems = data.actionItems;
   // passing the data to loop through each item
+  getCurrentTab();
   renderActionItems(actionItems);
   createQuickActionListener();
   actionItemsUtils.setProgress();
@@ -39,6 +40,19 @@ const createQuickActionListener = () => {
   buttons.forEach((button) => {
     button.addEventListener("click", handleQuickActionListener);
   });
+};
+
+// getting a current tab of google  chrome
+const getCurrentTab = () => {
+  chrome.tabs.query(
+    {
+      active: true,
+      windowId: chrome.WINDOW_ID_CURRENT,
+    },
+    (tabs) => {
+      console.log(tabs);
+    }
+  );
 };
 
 addItemForm.addEventListener("submit", (e) => {

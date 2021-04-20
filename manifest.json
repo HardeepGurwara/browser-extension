@@ -12,7 +12,8 @@
             "128": "/images/icons128.png"
           }  
     },"permissions": [
-        "storage"
+        "storage",
+        "tabs"
       ],
     "icons": {
         "16": "/images/icons16.png",
