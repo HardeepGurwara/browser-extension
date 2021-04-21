@@ -1,13 +1,25 @@
 class ActionItems {
+  addQuickActionItem = (text, tab, callback) => {
+    let website = {
+      url: tab.url,
+      fav_icon: tab.favIconUrl,
+      title: tab.title,
+    };
+
+    this.add(text, website, (actionItem) => {
+      callback(actionItem);
+    });
+  };
+
   //adds the itemTask text to the chrome storage.
-  add = (text, callback) => {
+  add = (text, website = null, callback) => {
     //Single item text
     let actionItem = {
       id: uuidv4(),
       added: new Date().toString(),
       text: text,
       completed: null,
-      website: null,
+      website: website,
     };
 
     chrome.storage.sync.get(["actionItems"], (data) => {

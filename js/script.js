@@ -9,7 +9,6 @@ const actionItemsUtils = new ActionItems();
 storage.get(["actionItems"], (data) => {
   let actionItems = data.actionItems;
   // passing the data to loop through each item
-  getCurrentTab();
   renderActionItems(actionItems);
   createQuickActionListener();
   actionItemsUtils.setProgress();
@@ -30,9 +29,17 @@ const renderActionItems = (actionItems) => [
 
 const handleQuickActionListener = (e) => {
   const text = e.target.getAttribute("data-text");
-  actionItemsUtils.add(text, (actionItem) => {
-    renderActionItem(actionItem.text, actionItem.id, actionItem.completed);
+
+  getCurrentTab().then((tab) => {
+    console.log(tab);
+    actionItemsUtils.addQuickActionItem(text, tab, (actionItem) => {
+      renderActionItem(actionItem.text, actionItem.id, actionItem.completed);
+    });
   });
+
+  // actionItemsUtils.add(text, (actionItem) => {
+  //   renderActionItem(actionItem.text, actionItem.id, actionItem.completed);
+  // });
 };
 
 const createQuickActionListener = () => {
@@ -43,24 +50,27 @@ const createQuickActionListener = () => {
 };
 
 // getting a current tab of google  chrome
-const getCurrentTab = () => {
-  chrome.tabs.query(
-    {
-      active: true,
-      windowId: chrome.WINDOW_ID_CURRENT,
-    },
-    (tabs) => {
-      console.log(tabs);
-    }
-  );
-};
+async function getCurrentTab() {
+  return await new Promise((resolve, reject) => {
+    // chromes enables us to get  tabs currrently open
+    chrome.tabs.query(
+      {
+        active: true,
+        windowId: chrome.WINDOW_ID_CURRENT,
+      },
+      (tabs) => {
+        resolve(tabs[0]);
+      }
+    );
+  });
+}
 
 addItemForm.addEventListener("submit", (e) => {
   e.preventDefault();
   // grabbing the input value from a form and we pass the input name field itemText, not the variable name
   let itemText = addItemForm.elements.namedItem("itemText").value;
   if (itemText) {
-    actionItemsUtils.add(itemText, (actionItem) => {
+    actionItemsUtils.add(itemText, null, (actionItem) => {
       renderActionItem(actionItem.text, actionItem.id, actionItem.completed);
       addItemForm.elements.namedItem("itemText").value = "";
     });
