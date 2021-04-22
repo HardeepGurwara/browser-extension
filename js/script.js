@@ -29,10 +29,10 @@ const renderActionItems = (actionItems) => [
 
 const handleQuickActionListener = (e) => {
   const text = e.target.getAttribute("data-text");
-
+  const id = e.target.getAttribute("data-id");
   getCurrentTab().then((tab) => {
     console.log(tab);
-    actionItemsUtils.addQuickActionItem(text, tab, (actionItem) => {
+    actionItemsUtils.addQuickActionItem(id, text, tab, (actionItem) => {
       renderActionItem(actionItem.text, actionItem.id, actionItem.completed);
     });
   });

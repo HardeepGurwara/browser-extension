@@ -1,14 +1,15 @@
 class ActionItems {
-  addQuickActionItem = (text, tab, callback) => {
-    let website = {
-      url: tab.url,
-      fav_icon: tab.favIconUrl,
-      title: tab.title,
-    };
+  addQuickActionItem = (id, text, tab, callback) => {
+    let website = null;
+    if (id == "quick-action-2") {
+      website = {
+        url: tab.url,
+        fav_icon: tab.favIconUrl,
+        title: tab.title,
+      };
+    }
 
-    this.add(text, website, (actionItem) => {
-      callback(actionItem);
-    });
+    this.add(text, website, callback);
   };
 
   //adds the itemTask text to the chrome storage.
