@@ -8,7 +8,7 @@ class ActionItems {
         title: tab.title,
       };
     }
-
+    //callback calling the line 2 callback
     this.add(text, website, callback);
   };
 
