@@ -24,6 +24,21 @@ body{
     color: #6c757d;
     font-size: 1.5rem;
     cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.greeting__name i{
+    font-size: 0.8rem;
+    margin-left: 4px;
+    opacity: 0;
+    transition: all 0.3s;
+   
+}
+
+.greeting__name i:hover{
+    opacity: 1;
+   
 }
 
 .progressContainer{
@@ -219,3 +234,4 @@ body{
     white-space: nowrap;
     text-overflow: ellipsis;
 }
+
