@@ -28,6 +28,8 @@ const renderActionItems = (actionItems) => [
   }),
 ];
 
+const createUpdateNameListener = () => {};
+
 const createUpdateNameDialogListener = () => {
   let greetingName = document.querySelector(".greeting__name");
 
