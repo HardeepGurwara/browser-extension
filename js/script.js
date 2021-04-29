@@ -14,6 +14,7 @@ storage.get(["actionItems"], (data) => {
   actionItemsUtils.setProgress();
   console.log(data.actionItems);
   createUpdateNameDialogListener();
+  createUpdateNameListener();
   //changing setprogress everytime everytime something happens to chrome local storage
   chrome.storage.onChanged.addListener(() => {
     actionItemsUtils.setProgress();
@@ -28,7 +29,15 @@ const renderActionItems = (actionItems) => [
   }),
 ];
 
-const createUpdateNameListener = () => {};
+const handleUpdateName = (e) => {
+  console.log(e);
+};
+
+const createUpdateNameListener = () => {
+  let element = document.querySelector("#updateName");
+
+  element.addEventListener("click", handleUpdateName);
+};
 
 const createUpdateNameDialogListener = () => {
   let greetingName = document.querySelector(".greeting__name");
