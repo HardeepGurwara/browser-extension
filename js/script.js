@@ -6,9 +6,12 @@ let storage = chrome.storage.sync;
 const actionItemsUtils = new ActionItems();
 
 // getting the data from the chrome storage
-storage.get(["actionItems"], (data) => {
+storage.get(["actionItems", "name"], (data) => {
   let actionItems = data.actionItems;
+
+  let name = data.name;
   // passing the data to loop through each item
+  setUserName(name);
   renderActionItems(actionItems);
   createQuickActionListener();
   actionItemsUtils.setProgress();
@@ -42,6 +45,7 @@ const handleUpdateName = (e) => {
     actionItemsUtils.saveName(name, () => {
       //set the user's name on front end
       setUserName(name);
+      $("#updateNameModal").modal("hide");
     });
   }
 };
