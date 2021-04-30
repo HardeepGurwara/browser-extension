@@ -21,6 +21,10 @@ storage.get(["actionItems"], (data) => {
   });
 });
 
+const setUserName = (name) => {
+  document.querySelector(".name_value").innerHTML = name;
+};
+
 //Making the data loop to display it
 const renderActionItems = (actionItems) => [
   actionItems.forEach((item) => {
@@ -30,7 +34,16 @@ const renderActionItems = (actionItems) => [
 ];
 
 const handleUpdateName = (e) => {
-  console.log(e);
+  //get the input
+
+  const name = document.getElementById("inputName").value;
+  if (name) {
+    //save the name
+    actionItemsUtils.saveName(name, () => {
+      //set the user's name on front end
+      setUserName(name);
+    });
+  }
 };
 
 const createUpdateNameListener = () => {

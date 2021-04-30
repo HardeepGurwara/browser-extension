@@ -86,4 +86,15 @@ class ActionItems {
       }
     });
   };
+
+  // this will save the name, will callback the function
+
+  saveName = (name, callback) => {
+    storage.set(
+      {
+        name: name,
+      },
+      callback
+    );
+  };
 }
