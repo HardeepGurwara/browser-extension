@@ -25,6 +25,7 @@ storage.get(["actionItems", "name"], (data) => {
 });
 
 const setUserName = (name) => {
+  let newName = name ? name : "Add Name";
   document.querySelector(".name_value").innerHTML = name;
 };
 
@@ -61,6 +62,11 @@ const createUpdateNameDialogListener = () => {
 
   greetingName.addEventListener("click", () => {
     //open the modal
+    storage.get(["name"], () => {
+      let name = data.name ? data.name : " ";
+      document.getElementById("inputName").value = name;
+    });
+
     $("#updateNameModal").modal("show");
   });
 };
